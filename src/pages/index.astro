@@ -1,0 +1,125 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+---
+<Layout>
+  <main>
+    <!-- HERO SECTION -->
+    <section class="swd-hero" id="inicio">
+      <div class="swd-hero__bg">
+        <img
+          src="/img-1.jpg"
+          alt="Avión de combate en DCS World"
+          class="swd-hero__img"
+        />
+      </div>
+      <div class="swd-hero__overlay"></div>
+
+      <div class="swd-container">
+        <div class="swd-hero__content">
+          <span class="swd-hero__tagline">Comunidad Internacional de Aviación Virtual</span>
+          <h1 class="swd-hero__title">
+            Swordsmen<br />
+            <span class="swd-title--gold">Virtual Squadron</span>
+          </h1>
+          <p class="swd-hero__desc">
+            Operaciones milsim de alto nivel, entrenamiento táctico y
+            compañerismo. Donde la espada representa el conocimiento y la
+            humildad.
+          </p>
+          <a href="#" class="swd-btn swd-btn--primary">Únete a Discord</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPLIT SECTION -->
+    <section class="swd-split" id="nosotros">
+      <div class="swd-split__image">
+        <img
+          src="/img-2.png"
+          alt="Pilotos de Swordsmen en formación"
+        />
+      </div>
+
+      <div class="swd-split__content">
+        <h2 class="swd-title">
+          ¿Quiénes <br /><span class="swd-title--gold">Somos?</span>
+        </h2>
+        <p>
+          <strong>SWD-085</strong> es una comunidad internacional y diversa de
+          aviación virtual. No nos limitamos a un solo tipo de aeronave ni a
+          un único estilo de vuelo.
+        </p>
+        <p>
+          Nuestra identidad está inspirada en el VFA-32 Swordsmen de la U.S.
+          Navy. Buscamos la excelencia operativa sin arrogancia, compartiendo
+          conocimientos y respetando la diversidad de nuestros integrantes.
+        </p>
+        <p>
+          Incluimos aviación de combate, helicópteros y operaciones civiles en
+          Microsoft Flight Simulator y DCS World.
+        </p>
+        <div style="margin-top: 30px">
+          <a href="#" class="swd-btn swd-btn--outline">Leer nuestra historia</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY SECTION -->
+    <section class="swd-gallery" id="escuadron">
+      <div class="swd-container">
+        <h2 class="swd-title" style="text-align: center; margin-bottom: 60px">
+          El <span class="swd-title--gold">Escuadrón</span>
+        </h2>
+
+        <div class="swd-gallery__grid">
+          <div class="swd-gallery__item">
+            <img
+              src="/img-3.png"
+              alt="Operaciones de combate en DCS"
+              class="swd-gallery__img"
+            />
+            <div class="swd-gallery__overlay">
+              <h3 class="swd-gallery__title">DCS World</h3>
+              <p style="color: #aaa; font-size: 0.9rem">Simulación de combate táctico.</p>
+            </div>
+          </div>
+
+          <div class="swd-gallery__item">
+            <img
+              src="/img-4.jpg"
+              alt="Helicópteros en operación"
+              class="swd-gallery__img"
+            />
+            <div class="swd-gallery__overlay">
+              <h3 class="swd-gallery__title">Ala Rotatoria</h3>
+            </div>
+          </div>
+
+          <div class="swd-gallery__item">
+            <img
+              src="/img-5.jpg"
+              alt="Aviación civil"
+              class="swd-gallery__img"
+            />
+            <div class="swd-gallery__overlay">
+              <h3 class="swd-gallery__title">Aviación Civil</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="swd-footer">
+    <div class="swd-container">
+      <h2 class="swd-title" style="font-size: 2rem">
+        Swordsmen <span class="swd-title--gold">Virtual Squadron</span>
+      </h2>
+      <p class="swd-footer__text">
+        &copy; 2026 SWD-085. Todos los derechos reservados. <br />
+        La simulación no es formación aeronáutica profesional real.
+      </p>
+    </div>
+  </footer>
+</Layout>

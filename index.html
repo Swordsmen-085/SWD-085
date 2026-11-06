@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Swordsmen Virtual Squadron (SWD-085) - Comunidad internacional de aviación virtual de alto nivel. Operaciones milsim en DCS World."
+    />
+    <title>Swordsmen Virtual Squadron | SWD-085</title>
+
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* =========================================
+           VARIABLES Y RESET (BEM)
+           ========================================= */
+      :root {
+        --swd-color-bg: #050505;
+        --swd-color-surface: #111111;
+        --swd-color-primary: #d4af37; /* Dorado */
+        --swd-color-text: #f5f5f5;
+        --swd-color-text-muted: #a0a0a0;
+        --swd-font-heading: "Barlow Condensed", sans-serif;
+        --swd-font-body: "Inter", sans-serif;
+        --swd-transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: var(--swd-font-body);
+        background-color: var(--swd-color-bg);
+        color: var(--swd-color-text);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+        transition: var(--swd-transition);
+      }
+      ul {
+        list-style: none;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+        height: auto;
+      }
+
+      /* =========================================
+           UTILIDADES
+           ========================================= */
+      .swd-container {
+        width: 90%;
+        max-width: 1400px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+      }
+
+      .swd-section {
+        padding: 120px 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .swd-title {
+        font-family: var(--swd-font-heading);
+        font-size: 4rem;
+        text-transform: uppercase;
+        line-height: 0.9;
+        margin-bottom: 20px;
+        letter-spacing: 1px;
+      }
+
+      .swd-title--gold {
+        color: var(--swd-color-primary);
+      }
+
+      .swd-text-gold {
+        color: var(--swd-color-primary);
+        font-weight: 600;
+      }
+
+      /* =========================================
+           HEADER Y FULLSCREEN MENU
+           ========================================= */
+      .swd-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 9999;
+        padding: 20px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        mix-blend-mode: difference; /* Para que el logo resalte sobre cualquier fondo */
+      }
+
+      .swd-header__logo-placeholder {
+        font-family: var(--swd-font-heading);
+        font-size: 1.5rem;
+        font-weight: 900;
+        color: #fff;
+        letter-spacing: 2px;
+      }
+
+      .swd-menu-btn {
+        background: none;
+        border: none;
+        color: #fff;
+        font-family: var(--swd-font-heading);
+        font-size: 1.2rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        z-index: 10001;
+      }
+
+      .swd-menu-btn__icon {
+        width: 30px;
+        height: 20px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .swd-menu-btn__line {
+        width: 100%;
+        height: 2px;
+        background-color: #fff;
+        transition: var(--swd-transition);
+      }
+
+      /* Menú Fullscreen Overlay */
+      .swd-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(5, 5, 5, 0.98);
+        z-index: 10000;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: var(--swd-transition);
+      }
+
+      .swd-overlay--active {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      .swd-overlay__nav {
+        text-align: center;
+      }
+
+      .swd-overlay__link {
+        display: block;
+        font-family: var(--swd-font-heading);
+        font-size: 4rem;
+        text-transform: uppercase;
+        color: var(--swd-color-text-muted);
+        margin: 10px 0;
+        letter-spacing: 2px;
+        transition: var(--swd-transition);
+      }
+
+      .swd-overlay__link:hover {
+        color: var(--swd-color-primary);
+        transform: scale(1.1);
+      }
+
+      .swd-overlay__socials {
+        margin-top: 50px;
+        display: flex;
+        gap: 30px;
+        font-family: var(--swd-font-body);
+        font-size: 1rem;
+        color: var(--swd-color-text-muted);
+      }
+
+      .swd-overlay__socials a:hover {
+        color: var(--swd-color-primary);
+      }
+
+      /* Animación del botón hamburguesa a X */
+      .swd-menu-btn--active .swd-menu-btn__line:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+      }
+      .swd-menu-btn--active .swd-menu-btn__line:nth-child(2) {
+        opacity: 0;
+      }
+      .swd-menu-btn--active .swd-menu-btn__line:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+      }
+      .swd-menu-btn--active {
+        mix-blend-mode: normal;
+      }
+
+      /* =========================================
+           HERO SECTION (Imagen Full)
+           ========================================= */
+      .swd-hero {
+        height: 100vh;
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        padding-bottom: 100px;
+      }
+
+      .swd-hero__bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+      }
+
+      .swd-hero__img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        /* Placeholder visual: Un degradado oscuro hasta que pongas tu imagen */
+        background: linear-gradient(to bottom, #1a1a1a, #050505);
+      }
+
+      .swd-hero__overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to top,
+          rgba(5, 5, 5, 1) 0%,
+          rgba(5, 5, 5, 0.3) 50%,
+          rgba(5, 5, 5, 0.8) 100%
+        );
+        z-index: 1;
+      }
+
+      .swd-hero__content {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+      }
+
+      .swd-hero__tagline {
+        font-family: var(--swd-font-body);
+        font-size: 1.2rem;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        color: var(--swd-color-primary);
+        margin-bottom: 10px;
+        display: block;
+      }
+
+      .swd-hero__title {
+        font-family: var(--swd-font-heading);
+        font-size: 8rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        line-height: 0.85;
+        margin-bottom: 20px;
+        text-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      }
+
+      .swd-hero__desc {
+        font-size: 1.2rem;
+        color: #ddd;
+        max-width: 600px;
+        margin-bottom: 40px;
+      }
+
+      /* =========================================
+           SPLIT SECTION (Estilo Pinterest)
+           ========================================= */
+      .swd-split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        min-height: 80vh;
+        background-color: var(--swd-color-surface);
+      }
+
+      .swd-split__image {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .swd-split__image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: grayscale(40%) contrast(1.2);
+        transition: var(--swd-transition);
+      }
+
+      .swd-split__image img:hover {
+        transform: scale(1.05);
+        filter: grayscale(0%) contrast(1);
+      }
+
+      .swd-split__content {
+        padding: 80px 10%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .swd-split__content p {
+        color: var(--swd-color-text-muted);
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+      }
+
+      /* =========================================
+           GALLERY / GRID SECTION
+           ========================================= */
+      .swd-gallery {
+        padding: 100px 0;
+        background-color: var(--swd-color-bg);
+      }
+
+      .swd-gallery__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 300px);
+        gap: 20px;
+      }
+
+      .swd-gallery__item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 4px;
+      }
+
+      .swd-gallery__item:nth-child(1) {
+        grid-column: 1 / 3;
+        grid-row: 1 / 3;
+      } /* Imagen grande izquierda */
+      .swd-gallery__item:nth-child(2) {
+        grid-column: 3 / 4;
+        grid-row: 1 / 2;
+      }
+      .swd-gallery__item:nth-child(3) {
+        grid-column: 3 / 4;
+        grid-row: 2 / 3;
+      }
+
+      .swd-gallery__img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--swd-transition);
+      }
+
+      .swd-gallery__item:hover .swd-gallery__img {
+        transform: scale(1.1);
+      }
+
+      .swd-gallery__overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 30px;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+      }
+
+      .swd-gallery__title {
+        font-family: var(--swd-font-heading);
+        font-size: 1.8rem;
+        text-transform: uppercase;
+      }
+
+      /* =========================================
+           BOTONES
+           ========================================= */
+      .swd-btn {
+        display: inline-block;
+        padding: 15px 40px;
+        font-family: var(--swd-font-heading);
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: var(--swd-transition);
+        border: 2px solid transparent;
+        clip-path: polygon(
+          10% 0,
+          100% 0,
+          100% 70%,
+          90% 100%,
+          0 100%,
+          0 30%
+        ); /* Borde diagonal táctico */
+      }
+
+      .swd-btn--primary {
+        background-color: var(--swd-color-primary);
+        color: var(--swd-color-bg);
+      }
+
+      .swd-btn--primary:hover {
+        background-color: #fff;
+        transform: translateY(-2px);
+      }
+
+      .swd-btn--outline {
+        background-color: transparent;
+        color: var(--swd-color-primary);
+        border-color: var(--swd-color-primary);
+      }
+
+      .swd-btn--outline:hover {
+        background-color: var(--swd-color-primary);
+        color: var(--swd-color-bg);
+      }
+
+      /* =========================================
+           FOOTER
+           ========================================= */
+      .swd-footer {
+        padding: 60px 0;
+        background-color: #000;
+        border-top: 1px solid #222;
+        text-align: center;
+      }
+
+      .swd-footer__text {
+        color: #555;
+        font-size: 0.9rem;
+        margin-top: 20px;
+      }
+
+      /* =========================================
+           RESPONSIVE
+           ========================================= */
+      @media (max-width: 992px) {
+        .swd-hero__title {
+          font-size: 5rem;
+        }
+        .swd-split {
+          grid-template-columns: 1fr;
+        }
+        .swd-split__image {
+          min-height: 400px;
+        }
+        .swd-gallery__grid {
+          grid-template-columns: 1fr;
+          grid-template-rows: auto;
+        }
+        .swd-gallery__item:nth-child(1),
+        .swd-gallery__item:nth-child(2),
+        .swd-gallery__item:nth-child(3) {
+          grid-column: auto;
+          grid-row: auto;
+          height: 300px;
+        }
+        .swd-overlay__link {
+          font-size: 2.5rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .swd-hero__title {
+          font-size: 3.5rem;
+        }
+        .swd-title {
+          font-size: 2.5rem;
+        }
+        .swd-header {
+          padding: 15px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER (Logo y Botón Menú) -->
+    <header class="swd-header">
+      <!-- Placeholder del Logo. Reemplazar por <img> cuando lo tengas -->
+      <div class="swd-header__logo-placeholder">SWD-085</div>
+
+      <button
+        class="swd-menu-btn"
+        id="swd-menu-btn"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+      >
+        <span>Menú</span>
+        <div class="swd-menu-btn__icon">
+          <div class="swd-menu-btn__line"></div>
+          <div class="swd-menu-btn__line"></div>
+          <div class="swd-menu-btn__line"></div>
+        </div>
+      </button>
+    </header>
+
+    <!-- FULLSCREEN MENU OVERLAY -->
+    <nav class="swd-overlay" id="swd-overlay" aria-label="Menú principal">
+      <ul class="swd-overlay__nav">
+        <li><a href="#" class="swd-overlay__link">Inicio</a></li>
+        <li><a href="#" class="swd-overlay__link">Nosotros</a></li>
+        <li><a href="#" class="swd-overlay__link">El Escuadrón</a></li>
+        <li><a href="#" class="swd-overlay__link">Operaciones</a></li>
+        <li><a href="#" class="swd-overlay__link">Únete</a></li>
+      </ul>
+      <div class="swd-overlay__socials">
+        <a href="#">DISCORD</a>
+        <a href="#">YOUTUBE</a>
+        <a href="#">INSTAGRAM</a>
+      </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main>
+      <!-- HERO SECTION (Imagen Full) -->
+      <section class="swd-hero" id="inicio">
+        <!-- CONTENEDOR DE LA IMAGEN DE FONDO -->
+        <div class="swd-hero__bg">
+          <!-- [AQUÍ VA LA IMAGEN DE FONDO DEL HERO] 
+                     Reemplaza el src por la URL de tu imagen (ej: un F-18 despegando) -->
+          <img
+            src="https://via.placeholder.com/1920x1080/111/333?text=IMAGEN+DE+FONDO+HERO+(DCS)"
+            alt="Avión de combate en DCS World"
+            class="swd-hero__img"
+          />
+        </div>
+        <div class="swd-hero__overlay"></div>
+
+        <div class="swd-container">
+          <div class="swd-hero__content">
+            <span class="swd-hero__tagline"
+              >Comunidad Internacional de Aviación Virtual</span
+            >
+            <h1 class="swd-hero__title">
+              Swordsmen<br />
+              <span class="swd-title--gold">Virtual Squadron</span>
+            </h1>
+            <p class="swd-hero__desc">
+              Operaciones milsim de alto nivel, entrenamiento táctico y
+              compañerismo. Donde la espada representa el conocimiento y la
+              humildad.
+            </p>
+            <a href="#" class="swd-btn swd-btn--primary">Únete a Discord</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- SPLIT SECTION (Imagen + Texto) -->
+      <section class="swd-split" id="nosotros">
+        <!-- CONTENEDOR DE LA IMAGEN -->
+        <div class="swd-split__image">
+          <!-- [AQUÍ VA LA IMAGEN DE LA SECCIÓN NOSOTROS] 
+                     Reemplaza el src. Ideal: Una foto del parche o de un piloto. -->
+          <img
+            src="https://via.placeholder.com/800x800/222/555?text=IMAGEN+SOBRE+NOSOTROS"
+            alt="Pilotos de Swordsmen en formación"
+          />
+        </div>
+
+        <div class="swd-split__content">
+          <h2 class="swd-title">
+            ¿Quiénes <br /><span class="swd-title--gold">Somos?</span>
+          </h2>
+          <p>
+            <strong>SWD-085</strong> es una comunidad internacional y diversa de
+            aviación virtual. No nos limitamos a un solo tipo de aeronave ni a
+            un único estilo de vuelo.
+          </p>
+          <p>
+            Nuestra identidad está inspirada en el VFA-32 Swordsmen de la U.S.
+            Navy. Buscamos la excelencia operativa sin arrogancia, compartiendo
+            conocimientos y respetando la diversidad de nuestros integrantes.
+          </p>
+          <p>
+            Incluimos aviación de combate, helicópteros y operaciones civiles en
+            Microsoft Flight Simulator y DCS World.
+          </p>
+          <div style="margin-top: 30px">
+            <a href="#" class="swd-btn swd-btn--outline"
+              >Leer nuestra historia</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- GALLERY / GRID SECTION (Estilo Pinterest) -->
+      <section class="swd-gallery" id="escuadron">
+        <div class="swd-container">
+          <h2 class="swd-title" style="text-align: center; margin-bottom: 60px">
+            El <span class="swd-title--gold">Escuadrón</span>
+          </h2>
+
+          <div class="swd-gallery__grid">
+            <!-- ITEM 1 (Grande) -->
+            <div class="swd-gallery__item">
+              <!-- [AQUÍ VA LA IMAGEN GRANDE DE LA GALERÍA] -->
+              <img
+                src="https://via.placeholder.com/800x600/111/444?text=IMAGEN+DCS+COMBATE"
+                alt="Operaciones de combate en DCS"
+                class="swd-gallery__img"
+              />
+              <div class="swd-gallery__overlay">
+                <h3 class="swd-gallery__title">DCS World</h3>
+                <p style="color: #aaa; font-size: 0.9rem">
+                  Simulación de combate táctico.
+                </p>
+              </div>
+            </div>
+
+            <!-- ITEM 2 -->
+            <div class="swd-gallery__item">
+              <!-- [AQUÍ VA LA IMAGEN DE HELICÓPTEROS] -->
+              <img
+                src="https://via.placeholder.com/400x300/222/555?text=HELICOPTEROS"
+                alt="Helicópteros en operación"
+                class="swd-gallery__img"
+              />
+              <div class="swd-gallery__overlay">
+                <h3 class="swd-gallery__title">Ala Rotatoria</h3>
+              </div>
+            </div>
+
+            <!-- ITEM 3 -->
+            <div class="swd-gallery__item">
+              <!-- [AQUÍ VA LA IMAGEN DE AVIACIÓN CIVIL] -->
+              <img
+                src="https://via.placeholder.com/400x300/333/666?text=AVIACION+CIVIL"
+                alt="Aviación civil"
+                class="swd-gallery__img"
+              />
+              <div class="swd-gallery__overlay">
+                <h3 class="swd-gallery__title">Aviación Civil</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="swd-footer">
+      <div class="swd-container">
+        <h2 class="swd-title" style="font-size: 2rem">
+          Swordsmen <span class="swd-title--gold">Virtual Squadron</span>
+        </h2>
+        <p class="swd-footer__text">
+          &copy; 2026 SWD-085. Todos los derechos reservados. <br />
+          La simulación no es formación aeronáutica profesional real.
+        </p>
+      </div>
+    </footer>
+
+    <!-- JAVASCRIPT (Vanilla) -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const menuBtn = document.getElementById("swd-menu-btn");
+        const overlay = document.getElementById("swd-overlay");
+
+        menuBtn.addEventListener("click", () => {
+          const isActive = overlay.classList.contains("swd-overlay--active");
+
+          if (isActive) {
+            overlay.classList.remove("swd-overlay--active");
+            menuBtn.classList.remove("swd-menu-btn--active");
+            menuBtn.setAttribute("aria-expanded", "false");
+          } else {
+            overlay.classList.add("swd-overlay--active");
+            menuBtn.classList.add("swd-menu-btn--active");
+            menuBtn.setAttribute("aria-expanded", "true");
+          }
+        });
+
+        // Cerrar menú al hacer clic en un enlace (opcional, para navegación SPA futura)
+        const links = document.querySelectorAll(".swd-overlay__link");
+        links.forEach((link) => {
+          link.addEventListener("click", () => {
+            overlay.classList.remove("swd-overlay--active");
+            menuBtn.classList.remove("swd-menu-btn--active");
+            menuBtn.setAttribute("aria-expanded", "false");
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
