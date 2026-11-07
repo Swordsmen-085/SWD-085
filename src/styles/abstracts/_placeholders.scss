@@ -1,0 +1,21 @@
+@use 'variables' as *;
+
+%swd-btn-base {
+  display: inline-block;
+  padding: 15px 40px;
+  font-family: $swd-font-heading;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: $swd-transition;
+  border: 2px solid transparent;
+  clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+}
+
+%swd-title-base {
+  font-family: $swd-font-heading;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}

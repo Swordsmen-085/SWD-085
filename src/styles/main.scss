@@ -1,0 +1,18 @@
+@use 'abstracts/variables' as *;
+@use 'abstracts/functions' as *;
+@use 'abstracts/mixins' as *;
+@use 'abstracts/placeholders' as *;
+
+@use 'base/reset';
+@use 'base/typography';
+
+@use 'components/buttons';
+@use 'components/overlay';
+
+@use 'layout/header';
+@use 'layout/hero';
+@use 'layout/footer';
+// Note: layout/navigation.scss is now a stub — styles consolidated into layout/header.scss
+@use 'layout/navigation';
+
+@use 'pages/home';

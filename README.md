@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 # Swordsmen Virtual Squadron (SWD-085) - Web Portal
 
 ## 📖 About the Project
@@ -29,3 +30,23 @@ Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of co
 
 ## 📄 License
 This project is intended for internal community use. All rights reserved by Swordsmen Virtual Squadron (SWD-085).
+=======
+# SWD-085 — Swordsmen Virtual Squadron
+
+Astro (Hybrid) project with React islands, Tailwind CSS, SCSS (BEM 7-1) and Vitest.
+
+## Commands
+
+`npm run dev` - Start Astro dev server.  
+`npm run build` - Production build.  
+`npm run test` - Vitest run.  
+`npm run test:watch` - Vitest interactive.  
+`npm run coverage` - Vitest coverage.
+
+## Architecture notes
+
+- React islands are only used for interactive UI (menu, forms).
+- SCSS follows the 7-1 pattern under `src/styles/`.
+- TypeScript strict mode for all components.
+- API integration points are in `src/services/api.ts` and target the future Python API repo.
+>>>>>>> Stashed changes

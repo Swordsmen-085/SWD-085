@@ -1,0 +1,126 @@
+@use '../abstracts/variables' as *;
+
+.swd-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  mix-blend-mode: difference;
+}
+
+.swd-header__logo-placeholder {
+  font-family: $swd-font-heading;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 2px;
+}
+
+.swd-menu-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-family: $swd-font-heading;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  z-index: 10001;
+}
+
+.swd-menu-btn__icon {
+  width: 30px;
+  height: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.swd-menu-btn__line {
+  width: 100%;
+  height: 2px;
+  background-color: #fff;
+  transition: $swd-transition;
+}
+
+// Fullscreen overlay
+.swd-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(5, 5, 5, 0.98);
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: $swd-transition;
+}
+
+.swd-overlay--active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.swd-overlay__nav {
+  text-align: center;
+}
+
+.swd-overlay__link {
+  display: block;
+  font-family: $swd-font-heading;
+  font-size: 4rem;
+  text-transform: uppercase;
+  color: $swd-color-text-muted;
+  margin: 10px 0;
+  letter-spacing: 2px;
+  transition: $swd-transition;
+}
+
+.swd-overlay__link:hover {
+  color: $swd-color-primary;
+  transform: scale(1.1);
+}
+
+.swd-overlay__socials {
+  margin-top: 50px;
+  display: flex;
+  gap: 30px;
+  font-family: $swd-font-body;
+  font-size: 1rem;
+  color: $swd-color-text-muted;
+}
+
+.swd-overlay__socials a:hover {
+  color: $swd-color-primary;
+}
+
+// Hamburger to X animation
+.swd-menu-btn--active .swd-menu-btn__line:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.swd-menu-btn--active .swd-menu-btn__line:nth-child(2) {
+  opacity: 0;
+}
+
+.swd-menu-btn--active .swd-menu-btn__line:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+.swd-menu-btn--active {
+  mix-blend-mode: normal;
+}
