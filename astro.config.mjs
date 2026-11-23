@@ -4,8 +4,8 @@ import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://swd085.example',
-  output: 'static',
+  site: 'https://Swordsmen-085.github.io',
+  base: '/SWD-085',
   integrations: [
     react(),
     tailwind(),
@@ -13,4 +13,5 @@ export default defineConfig({
       filter: (page) => page.endsWith('.html') || page.endsWith('/'),
     }),
   ],
+  output: 'static',
 });
